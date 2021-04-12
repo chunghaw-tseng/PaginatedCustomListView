@@ -1,4 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:paginatedlistview/src/ui/footer/ListFooterWidget.dart';
+import 'package:paginatedlistview/src/ui/header/ListHeaderWidget.dart';
+import 'package:paginatedlistview/src/ui/listrow/ListRowWidget.dart';
+import 'package:paginatedlistview/src/ui/header/elements/headerWidget.dart';
+
+import 'ui/listrow/elements/ListText.dart';
 
 // Data will arrive as
 //  current_page
@@ -29,6 +37,10 @@ class _SearchablePaginatedListViewState
     extends State<SearchablePaginatedListView> {
   String dropdownValue = 'One';
 
+  // _searchUpdate(List<String> query) {
+  //   print("In main widget ${query}");
+  // }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -42,75 +54,33 @@ class _SearchablePaginatedListViewState
                     itemBuilder: (context, index) {
                       if (index == 0) {
                         // return the header
-                        return new ListTile(
-                          onTap: null,
-                          title: Row(
-                            children: [
-                              Expanded(
-                                  child: Column(
-                                children: [
-                                  Text("First Name"),
-                                  TextField(
-                                    obscureText: true,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: 'Search',
-                                    ),
-                                  )
-                                ],
-                              ))
-                            ],
-                          ),
-                        );
+                        return ListHeaderWidget(headers: [
+                          HeaderWidget(
+                              title: "Search",
+                              label: "Searchable",
+                              type: HeaderType.searchable),
+                          HeaderWidget(
+                              title: "Select",
+                              label: "Selectable",
+                              selection: ["Select A", "Select B", "Select C"],
+                              type: HeaderType.selectable),
+                          HeaderWidget(
+                              title: "Search B",
+                              label: "Searchable B",
+                              type: HeaderType.searchable),
+                        ]);
                       }
                       index -= 1;
-
-                      return ListTile(
-                        title: Text('${index}'),
-                      );
+                      return ListRowWidget(cells: [
+                        ListText(text: "$index"),
+                        ListText(text: "$index"),
+                        ListText(text: "$index")
+                      ]);
                     })),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 10, right: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                DropdownButton(
-                  value: dropdownValue,
-                  icon: const Icon(Icons.arrow_downward),
-                  iconSize: 24,
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.deepPurple),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.deepPurpleAccent,
-                  ),
-                  onChanged: (String newValue) {
-                    setState(() {
-                      dropdownValue = newValue;
-                    });
-                  },
-                  items: <String>['One', 'Two', 'Free', 'Four']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-                Container(
-                  child: Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(Icons.arrow_back), onPressed: () => {}),
-                      IconButton(
-                          icon: Icon(Icons.arrow_forward), onPressed: () => {}),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
+              padding: EdgeInsets.only(left: 10, right: 10),
+              child: ListFooterWidget())
         ],
       ),
     );
