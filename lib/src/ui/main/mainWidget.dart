@@ -6,7 +6,7 @@ import 'package:paginatedlistview/src/ui/header/ListHeaderWidget.dart';
 import 'package:paginatedlistview/src/ui/listrow/ListRowWidget.dart';
 import 'package:paginatedlistview/src/ui/header/elements/headerWidget.dart';
 
-import 'ui/listrow/elements/ListText.dart';
+import '../listrow/elements/ListText.dart';
 
 // Data will arrive as
 //  current_page
@@ -19,14 +19,25 @@ import 'ui/listrow/elements/ListText.dart';
 // Header with search
 
 class SearchablePaginatedListView extends StatefulWidget {
-  SearchablePaginatedListView(
-      {Key key, this.pages, this.currentPage, this.items, this.totalItems})
-      : super(key: key);
-
   final int pages;
-  int currentPage;
+  final int currentPage;
+  final ListHeaderWidget header;
+  final ListRowWidget row;
+
+  /// Data send
+  final Map<String, dynamic> data;
   final int items;
   final int totalItems;
+  SearchablePaginatedListView(
+      {Key key,
+      this.pages,
+      this.currentPage,
+      this.items,
+      this.totalItems,
+      this.header,
+      this.data,
+      this.row})
+      : super(key: key);
 
   @override
   _SearchablePaginatedListViewState createState() =>
@@ -36,10 +47,6 @@ class SearchablePaginatedListView extends StatefulWidget {
 class _SearchablePaginatedListViewState
     extends State<SearchablePaginatedListView> {
   String dropdownValue = 'One';
-
-  // _searchUpdate(List<String> query) {
-  //   print("In main widget ${query}");
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +87,20 @@ class _SearchablePaginatedListViewState
           ),
           Padding(
               padding: EdgeInsets.only(left: 10, right: 10),
-              child: ListFooterWidget())
+              child: ListFooterWidget(
+                onNextPagePressed: (value) {
+                  print("Next Page pressed $value");
+                },
+                onPerChangePressed: (value) {
+                  print("Per Page pressed $value");
+                },
+                onPrevPagePressed: (value) {
+                  print("Prev page pressed $value");
+                },
+                perPage: "10",
+                totalPages: 10,
+                currentPage: 2,
+              ))
         ],
       ),
     );

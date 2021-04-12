@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:paginatedlistview/src/utils/Callbacks.dart';
 
 class SelectableHeader extends StatefulWidget {
   final String label;
   final List<String> selection;
-  final ValueChanged<Map<String, dynamic>> filterSearch;
+  final SearchCallback filterSearch;
   SelectableHeader(
       {Key key,
       @required this.label,
@@ -56,10 +57,13 @@ class _SelectableHeaderState extends State<SelectableHeader> {
           );
         }));
       }).toList(),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[Text("Select"), Icon(Icons.arrow_drop_down)],
+      child: Container(
+        height: 60,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[Text("Select"), Icon(Icons.arrow_drop_down)],
+        ),
       ),
       onSelected: (value) {},
     );

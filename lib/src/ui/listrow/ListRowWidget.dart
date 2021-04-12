@@ -5,7 +5,9 @@ class ListRowWidget extends StatefulWidget {
   // Also decide if this should expand
   // Needs to have different shades of color
   final List<Widget> cells;
-  ListRowWidget({Key key, @required this.cells}) : super(key: key);
+  final bool expandable;
+  ListRowWidget({Key key, @required this.cells, @required this.expandable})
+      : super(key: key);
 
   @override
   _ListRowWidgetState createState() => _ListRowWidgetState();
@@ -15,20 +17,18 @@ class ListRowWidget extends StatefulWidget {
 class _ListRowWidgetState extends State<ListRowWidget> {
   @override
   Widget build(BuildContext context) {
-    // ExpansionTile()
-    // return Container(
-    //     decoration: BoxDecoration(color: Colors.red),
-    //     child: ListTile(
-    //       onTap: () {},
-    //       title: Row(
-    //         children: widget.cells,
-    //       ),
-    // ));
-    return ListTile(
-      onTap: () {},
-      title: Row(
-        children: widget.cells,
-      ),
-    );
+    return widget.expandable
+        ? ListTile(
+            onTap: () {},
+            title: Row(
+              children: widget.cells,
+            ),
+          )
+        : ExpansionTile(
+            title: Row(
+              children: widget.cells,
+            ),
+            children: [],
+          );
   }
 }

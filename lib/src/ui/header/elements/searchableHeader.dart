@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:paginatedlistview/src/utils/Callbacks.dart';
 
 class SearchableHeader extends StatefulWidget {
   /// Label
   final String label;
-  final ValueChanged<Map<String, String>> queryChanged;
+  final SearchCallback queryChanged;
 
   SearchableHeader({Key key, @required this.label, @required this.queryChanged})
       : super(key: key);
@@ -13,30 +15,13 @@ class SearchableHeader extends StatefulWidget {
 }
 
 class _SearchableHeaderState extends State<SearchableHeader> {
-  final myController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    myController.addListener(_updateSearchQuery);
-  }
-
-  @override
-  void dispose() {
-    myController.dispose();
-    super.dispose();
-  }
-
-  _updateSearchQuery() {
-    widget.queryChanged({widget.label: myController.text});
-  }
-
-  // OnSubmitted -> Completed
   @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: myController,
-      // onEditingComplete: _updateSearchQuery,
+      textInputAction: TextInputAction.search,
+      onSubmitted: (value) {
+        widget.queryChanged({widget.label: value});
+      },
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: widget.label,

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:paginatedlistview/src/utils/Callbacks.dart';
 
 class PageItemsWidgets extends StatefulWidget {
-  PageItemsWidgets({Key key}) : super(key: key);
+  final String perPage;
+  final ChangePerCallback onPerPagePressed;
+  PageItemsWidgets(
+      {Key key, @required this.perPage, @required this.onPerPagePressed})
+      : super(key: key);
 
   @override
   _PageItemsWidgetsState createState() => _PageItemsWidgetsState();
 }
 
 class _PageItemsWidgetsState extends State<PageItemsWidgets> {
-  String dropdownValue = '10';
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,7 +20,7 @@ class _PageItemsWidgetsState extends State<PageItemsWidgets> {
         children: [
           Text("Show Rows : "),
           DropdownButton(
-            value: dropdownValue,
+            value: widget.perPage,
             icon: const Icon(Icons.arrow_downward),
             iconSize: 24,
             elevation: 16,
@@ -27,9 +30,7 @@ class _PageItemsWidgetsState extends State<PageItemsWidgets> {
               color: Colors.deepPurpleAccent,
             ),
             onChanged: (String newValue) {
-              setState(() {
-                dropdownValue = newValue;
-              });
+              widget.onPerPagePressed(newValue);
             },
             items: <String>['10', '20', '30', '40', '50']
                 .map<DropdownMenuItem<String>>((String value) {

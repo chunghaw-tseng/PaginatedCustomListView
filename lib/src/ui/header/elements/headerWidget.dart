@@ -15,7 +15,7 @@ class HeaderWidget extends StatefulWidget {
   final List<String> selection;
 
   /// The callback for when values have changed
-  final ValueChanged query;
+  final SearchableHeader query;
 
   /// The type of filter widget to add into the header
   final HeaderType type;
