@@ -1,34 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:paginatedlistview/src/ui/listrow/elements/ListItem.dart';
 
-class ListRowWidget extends StatefulWidget {
-  // Data Row
-  // Also decide if this should expand
-  // Needs to have different shades of color
+// Add the series to the list
+class ListRowWidget extends StatelessWidget {
   final List<Widget> cells;
   final bool expandable;
-  ListRowWidget({Key key, @required this.cells, @required this.expandable})
+  final List<ListItem> expandedCells;
+  const ListRowWidget(
+      {Key key,
+      @required this.cells,
+      @required this.expandable,
+      this.expandedCells})
       : super(key: key);
 
   @override
-  _ListRowWidgetState createState() => _ListRowWidgetState();
-}
-
-// Check if there is any series uuid
-class _ListRowWidgetState extends State<ListRowWidget> {
-  @override
   Widget build(BuildContext context) {
-    return widget.expandable
-        ? ListTile(
-            onTap: () {},
+    return expandable
+        ? ExpansionTile(
             title: Row(
-              children: widget.cells,
-            ),
-          )
-        : ExpansionTile(
-            title: Row(
-              children: widget.cells,
+              children: cells,
             ),
             children: [],
+          )
+        : ListTile(
+            onTap: () {},
+            title: Row(
+              children: cells,
+            ),
           );
   }
 }

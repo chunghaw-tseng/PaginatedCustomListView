@@ -35,8 +35,8 @@ class _ListFooterWidgetState extends State<ListFooterWidget> {
           onPerPagePressed: (value) => widget.onPerChangePressed(value),
         ),
         PageSelectorWidget(
-          currentPage: 1,
-          totalPages: 10,
+          currentPage: widget.currentPage,
+          totalPages: widget.totalPages,
           onNextPagePressed: (value) => widget.onNextPagePressed(value),
           onPrevPagePressed: (value) => widget.onPrevPagePressed(value),
         )

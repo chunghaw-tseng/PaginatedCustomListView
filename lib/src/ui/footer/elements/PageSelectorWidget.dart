@@ -19,11 +19,19 @@ class PageSelectorWidget extends StatefulWidget {
   _PageSelectorWidgetState createState() => _PageSelectorWidgetState();
 }
 
-// TODO The limits of the pages
 class _PageSelectorWidgetState extends State<PageSelectorWidget> {
+  bool _nextPageDisabled, _prevPageDisabled;
+
+  checkPageDisabled() {
+    _nextPageDisabled =
+        (widget.currentPage == widget.totalPages) ? true : false;
+    _prevPageDisabled = (widget.currentPage == 1) ? true : false;
+  }
+
   // Current Page
   @override
   Widget build(BuildContext context) {
+    checkPageDisabled();
     return Container(
         child: Row(children: [
       Container(
@@ -32,19 +40,25 @@ class _PageSelectorWidgetState extends State<PageSelectorWidget> {
             Text("Total ${widget.totalPages} pages"),
             IconButton(
                 icon: Icon(Icons.arrow_back),
-                onPressed: () => widget.onPrevPagePressed(1)),
+                onPressed: _prevPageDisabled
+                    ? null
+                    : () => widget.onPrevPagePressed(1)),
             IconButton(
                 icon: Icon(Icons.arrow_left_sharp),
-                onPressed: () =>
-                    widget.onPrevPagePressed(widget.currentPage - 1)),
+                onPressed: _prevPageDisabled
+                    ? null
+                    : () => widget.onPrevPagePressed(widget.currentPage - 1)),
             Text("${widget.currentPage}"),
             IconButton(
                 icon: Icon(Icons.arrow_right_sharp),
-                onPressed: () =>
-                    widget.onNextPagePressed(widget.currentPage + 1)),
+                onPressed: _nextPageDisabled
+                    ? null
+                    : () => widget.onNextPagePressed(widget.currentPage + 1)),
             IconButton(
                 icon: Icon(Icons.arrow_forward),
-                onPressed: () => widget.onNextPagePressed(widget.totalPages)),
+                onPressed: _nextPageDisabled
+                    ? null
+                    : () => widget.onNextPagePressed(widget.totalPages)),
           ],
         ),
       )
