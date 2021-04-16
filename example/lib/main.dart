@@ -1,5 +1,9 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:paginatedlistview/paginatedlistview.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'model/pagingListViewModel.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,118 +33,140 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var queryData = {
-    "current_page": 1,
-    "total_pages": 2,
-    "per_page": 10,
-    "items": 10,
-    "total_items": 11,
-    "headers": [
-      {"name": "Patient Name", "key": "patient_name"},
-      {"name": "Patient ID", "key": "patient_id"},
-      {"name": "Study IUID", "key": "study_iuid"},
-      {"name": "Report Date", "key": "report_date"},
-      {"name": "Modality", "key": "modality"},
-    ],
-    "data": [
-      {
-        "patient_name": "TestA",
-        "patient_id": "10",
-        "study_iuid": "123456789",
-        "report_date": "2020-01-20",
-        "modality": "CT"
-      },
-      {
-        "patient_name": "TestB",
-        "patient_id": "11",
-        "study_iuid": "234567891",
-        "report_date": "2020-01-20",
-        "modality": "CT"
-      },
-      {
-        "patient_name": "TestC",
-        "patient_id": "12",
-        "study_iuid": "345678912",
-        "report_date": "2020-01-21",
-        "modality": "CT"
-      },
-      {
-        "patient_name": "TestD",
-        "patient_id": "13",
-        "study_iuid": "456789123",
-        "report_date": "2020-01-21",
-        "modality": "CT"
-      },
-      {
-        "patient_name": "TestE",
-        "patient_id": "14",
-        "study_iuid": "567891234",
-        "report_date": "2020-01-22",
-        "modality": "CT"
-      },
-      {
-        "patient_name": "TestF",
-        "patient_id": "15",
-        "study_iuid": "678912345",
-        "report_date": "2020-01-23",
-        "modality": "CT"
-      },
-      {
-        "patient_name": "TestG",
-        "patient_id": "16",
-        "study_iuid": "789123456",
-        "report_date": "2020-01-23",
-        "modality": "CT"
-      },
-      {
-        "patient_name": "TestH",
-        "patient_id": "17",
-        "study_iuid": "891234567",
-        "report_date": "2020-01-24",
-        "modality": "CT"
-      },
-      {
-        "patient_name": "TestI",
-        "patient_id": "18",
-        "study_iuid": "912345678",
-        "report_date": "2020-01-25",
-        "modality": "CT"
-      },
-      {
-        "patient_name": "TestJ",
-        "patient_id": "19",
-        "study_iuid": "123456780",
-        "report_date": "2020-01-25",
-        "modality": "CT"
-      },
-      {
-        "patient_name": "TestK",
-        "patient_id": "20",
-        "study_iuid": "123456700",
-        "report_date": "2020-01-26",
-        "modality": "CT"
-      }
-    ]
-  };
+  PagingListViewModel pageModel;
 
-  ListHeaderWidget createHeader() {}
+  @override
+  void initState() {
+    super.initState();
+    pageModel = PagingListViewModel();
+  }
 
-  ListRowWidget createRow() {}
+  headerFiltered(String searchkey, dynamic data) {
+    pageModel.addQuery(searchkey, data);
+  }
+
+  sortData(bool sortKey, dynamic data) {
+    pageModel.updateSort(sortKey, data);
+  }
+
+  createExpandedRow(List<String> current) {
+    List<Widget> expandedItems = [];
+    for (var i = 0; i < current.length; i++) {
+      expandedItems.add(ListItem(
+          child: SelectableText("${current[i]}"), searchKey: "${current[i]}"));
+    }
+    return expandedItems;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: SearchablePaginatedListView(
-          pages: 3,
-          currentPage: 1,
-          items: 10,
-          totalItems: 30,
+        appBar: AppBar(
+          title: Text(widget.title),
         ),
-      ),
-    );
+        body: Center(
+          child: ScopedModel(
+              model: pageModel,
+              child: SearchablePaginatedListView(
+                header: () {
+                  List<Header> headerList = [];
+                  for (var header in pageModel.header_data) {
+                    switch (header["type"]) {
+                      case HeaderType.selectable:
+                        headerList.add(Header(
+                            label: header["name"],
+                            headerKey: header["key"],
+                            searchField: SelectableHeader(
+                                label: header["name"],
+                                selection: header["selection"],
+                                keyName: header["key"],
+                                filterSearch: headerFiltered)));
+                        break;
+                      case HeaderType.date:
+                        headerList.add(Header(
+                            label: header["name"],
+                            headerKey: header["key"],
+                            searchField: TimeRangeHeader(
+                                label: header["name"],
+                                textSearch: true,
+                                keyName: header["key"],
+                                filterSearch: headerFiltered)));
+                        break;
+                      case HeaderType.searchable:
+                      default:
+                        headerList.add(Header(
+                            label: header["name"],
+                            headerKey: header["key"],
+                            searchField: SearchableHeader(
+                                label: header["name"],
+                                keyName: header["key"],
+                                filterSearch: headerFiltered)));
+                        break;
+                    }
+                  }
+                  return ListHeaderWidget(
+                    headers: headerList,
+                    sortAscending: pageModel.sortAscending,
+                    sortingIndex: pageModel.sortIndex,
+                    onSort: (bool asc, int index) {
+                      setState(() {
+                        pageModel.updateSort(asc, index);
+                      });
+                    },
+                  );
+                },
+                row: (int index) {
+                  var current = pageModel.data[index];
+                  return ListRowWidget(
+                      cells: [
+                        ListItem(
+                          child: Text(current["patient_name"]),
+                          searchKey: current["patient_name"],
+                        ),
+                        ListItem(
+                          child: Text(current["patient_id"]),
+                          searchKey: current["patient_id"],
+                        ),
+                        ListItem(
+                          child: Text(current["study_iuid"]),
+                          searchKey: current["study_iuid"],
+                        ),
+                        ListItem(
+                          child: Text(current["report_date"]),
+                          searchKey: current["report_date"],
+                        ),
+                        ListItem(
+                          child: Text(current["modality"]),
+                          searchKey: current["modality"],
+                        ),
+                        ListItem(
+                          child: TextButton(
+                            onPressed: null,
+                            child: Text("View"),
+                          ),
+                          searchKey: current["modality"],
+                        ),
+                      ],
+                      expandedCells: current.containsKey("series_iuid")
+                          ? createExpandedRow(current["series_iuid"])
+                          : null);
+                },
+                pages: pageModel.pageInfo.totalPages,
+                currentPage: pageModel.pageInfo.currentPage,
+                items: pageModel.pageInfo.items,
+                perPage: pageModel.pageInfo.perPage,
+                totalItems: pageModel.pageInfo.totalItems,
+                onPageChange: (value) {
+                  setState(() {
+                    pageModel.changePage(value);
+                  });
+                },
+                onPerChangePressed: (value) {
+                  setState(() {
+                    pageModel.changePerPage(value);
+                  });
+                },
+              )),
+        ));
   }
 }

@@ -3,12 +3,14 @@ import 'package:paginatedlistview/src/utils/Callbacks.dart';
 
 class SelectableHeader extends StatefulWidget {
   final String label;
+  final String keyName;
   final List<String> selection;
   final SearchCallback filterSearch;
   SelectableHeader(
       {Key key,
       @required this.label,
       @required this.selection,
+      @required this.keyName,
       @required this.filterSearch})
       : super(key: key);
 
@@ -23,7 +25,7 @@ class _SelectableHeaderState extends State<SelectableHeader> {
   void initState() {
     super.initState();
     for (var i = 0; i < widget.selection.length; i++) {
-      searchQueries[widget.selection[i]] = false;
+      searchQueries[widget.selection[i]] = true;
     }
   }
 
@@ -50,7 +52,7 @@ class _SelectableHeaderState extends State<SelectableHeader> {
             onChanged: (bool value) {
               setState(() {
                 searchQueries[e] = value;
-                widget.filterSearch({widget.label: createQueries()});
+                widget.filterSearch(widget.keyName, createQueries());
               });
             },
             checkColor: Colors.green,

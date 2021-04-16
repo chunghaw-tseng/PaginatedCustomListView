@@ -5,9 +5,14 @@ import 'package:paginatedlistview/src/utils/Callbacks.dart';
 class SearchableHeader extends StatefulWidget {
   /// Label
   final String label;
-  final SearchCallback queryChanged;
+  final String keyName;
+  final SearchCallback filterSearch;
 
-  SearchableHeader({Key key, @required this.label, @required this.queryChanged})
+  SearchableHeader(
+      {Key key,
+      @required this.label,
+      @required this.filterSearch,
+      @required this.keyName})
       : super(key: key);
 
   @override
@@ -20,7 +25,7 @@ class _SearchableHeaderState extends State<SearchableHeader> {
     return TextField(
       textInputAction: TextInputAction.search,
       onSubmitted: (value) {
-        widget.queryChanged({widget.label: value});
+        widget.filterSearch(widget.keyName, value);
       },
       decoration: InputDecoration(
         border: OutlineInputBorder(),

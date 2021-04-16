@@ -4,15 +4,13 @@ import 'package:paginatedlistview/src/utils/Callbacks.dart';
 class PageSelectorWidget extends StatefulWidget {
   final int currentPage;
   final int totalPages;
-  final NextPageCallback onNextPagePressed;
-  final PrevPageCallback onPrevPagePressed;
+  final PageChangeCallback onPageChanged;
 
   PageSelectorWidget(
       {Key key,
       @required this.currentPage,
       @required this.totalPages,
-      @required this.onNextPagePressed,
-      @required this.onPrevPagePressed})
+      @required this.onPageChanged})
       : super(key: key);
 
   @override
@@ -40,25 +38,24 @@ class _PageSelectorWidgetState extends State<PageSelectorWidget> {
             Text("Total ${widget.totalPages} pages"),
             IconButton(
                 icon: Icon(Icons.arrow_back),
-                onPressed: _prevPageDisabled
-                    ? null
-                    : () => widget.onPrevPagePressed(1)),
+                onPressed:
+                    _prevPageDisabled ? null : () => widget.onPageChanged(1)),
             IconButton(
                 icon: Icon(Icons.arrow_left_sharp),
                 onPressed: _prevPageDisabled
                     ? null
-                    : () => widget.onPrevPagePressed(widget.currentPage - 1)),
+                    : () => widget.onPageChanged(widget.currentPage - 1)),
             Text("${widget.currentPage}"),
             IconButton(
                 icon: Icon(Icons.arrow_right_sharp),
                 onPressed: _nextPageDisabled
                     ? null
-                    : () => widget.onNextPagePressed(widget.currentPage + 1)),
+                    : () => widget.onPageChanged(widget.currentPage + 1)),
             IconButton(
                 icon: Icon(Icons.arrow_forward),
                 onPressed: _nextPageDisabled
                     ? null
-                    : () => widget.onNextPagePressed(widget.totalPages)),
+                    : () => widget.onPageChanged(widget.totalPages)),
           ],
         ),
       )

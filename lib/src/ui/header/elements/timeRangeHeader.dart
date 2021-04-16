@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:paginatedlistview/src/ui/header/elements/dateTime/datetimeSearch.dart';
-
+import 'package:paginatedlistview/src/utils/Callbacks.dart';
 import 'dateTime/dateTimePicker.dart';
 
 // 2 different types -> Click and the other text
 class TimeRangeHeader extends StatefulWidget {
   final bool textSearch;
   final String label;
-  final ValueChanged<Map<String, dynamic>> timeChanged;
+  final String keyName;
+  final SearchCallback filterSearch;
   TimeRangeHeader(
-      {Key key, @required this.textSearch, this.timeChanged, this.label})
+      {Key key,
+      @required this.textSearch,
+      @required this.keyName,
+      this.filterSearch,
+      this.label})
       : super(key: key);
 
   @override
@@ -40,10 +45,10 @@ class _TimeRangeHeaderState extends State<TimeRangeHeader> {
     setState(() {
       if (changedtime.type == Datetype.start) {
         _startTimeSearch = changedtime;
-        widget.timeChanged({"${widget.label}_start": changedtime.timestamp});
+        widget.filterSearch("${widget.keyName}_start", changedtime.timestamp);
       } else {
         _endTimeSearch = changedtime;
-        widget.timeChanged({"${widget.label}_end": changedtime.timestamp});
+        widget.filterSearch("${widget.keyName}_end", changedtime.timestamp);
       }
     });
   }
@@ -71,16 +76,17 @@ class _TimeRangeHeaderState extends State<TimeRangeHeader> {
                     setState(() {
                       _starterror = validateDate(value);
                       if (_starterror) {
-                        widget.timeChanged({
-                          "${widget.label}_start": stringToTimestamp(value)
-                        });
+                        widget.filterSearch("${widget.keyName}_start",
+                            stringToTimestamp(value));
                       }
                     });
                   },
+                  // TODO Add the error on top
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: widget.label,
-                      errorText: _starterror ? null : "Input as YYYYMMDD"),
+                      hintText: "YYYYMMDD",
+                      errorText: _starterror ? null : "YYYYMMDD"),
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
               ),
@@ -92,15 +98,16 @@ class _TimeRangeHeaderState extends State<TimeRangeHeader> {
                     setState(() {
                       _enderror = validateDate(value);
                       if (_enderror) {
-                        widget.timeChanged(
-                            {"${widget.label}_end": stringToTimestamp(value)});
+                        widget.filterSearch(
+                            "${widget.keyName}_end", stringToTimestamp(value));
                       }
                     });
                   },
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: widget.label,
-                      errorText: _enderror ? null : "Input as YYYYMMDD"),
+                      hintText: "YYYYMMDD",
+                      errorText: _enderror ? null : "YYYYMMDD"),
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
               )

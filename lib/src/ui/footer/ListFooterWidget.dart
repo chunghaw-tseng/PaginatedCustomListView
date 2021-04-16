@@ -7,17 +7,15 @@ class ListFooterWidget extends StatefulWidget {
   final int totalPages;
   final int currentPage;
   final String perPage;
-  final NextPageCallback onNextPagePressed;
-  final PrevPageCallback onPrevPagePressed;
+  final PageChangeCallback onPageChanged;
   final ChangePerCallback onPerChangePressed;
   ListFooterWidget(
       {Key key,
       @required this.totalPages,
       @required this.currentPage,
       @required this.perPage,
-      @required this.onNextPagePressed,
-      @required this.onPerChangePressed,
-      @required this.onPrevPagePressed})
+      @required this.onPageChanged,
+      @required this.onPerChangePressed})
       : super(key: key);
 
   @override
@@ -37,8 +35,7 @@ class _ListFooterWidgetState extends State<ListFooterWidget> {
         PageSelectorWidget(
           currentPage: widget.currentPage,
           totalPages: widget.totalPages,
-          onNextPagePressed: (value) => widget.onNextPagePressed(value),
-          onPrevPagePressed: (value) => widget.onPrevPagePressed(value),
+          onPageChanged: (value) => widget.onPageChanged(value),
         )
       ],
     );

@@ -52,7 +52,7 @@ class DateTimePicker extends StatelessWidget {
           context, this.compareTimestamp, this.datetimeSearch);
       if (error != null) {
         this.datetimeSearch.setDate(lastDate);
-        //TODO Return snackbar
+        ScaffoldMessenger.of(context).showSnackBar(error);
         return;
       }
       notifyParent(this.datetimeSearch);
@@ -72,7 +72,7 @@ class DateTimePicker extends StatelessWidget {
           context, this.compareTimestamp, this.datetimeSearch);
       if (error != null) {
         this.datetimeSearch.setTime(lastTime);
-        // TODO Return snackbar
+        ScaffoldMessenger.of(context).showSnackBar(error);
         return;
       }
       notifyParent(this.datetimeSearch);

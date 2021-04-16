@@ -1,9 +1,9 @@
 // Defining callbacks
 import '../../paginatedlistview.dart';
 
-typedef void NextPageCallback(int id);
-typedef void PrevPageCallback(int id);
+typedef void PageChangeCallback(int id);
 typedef void ChangePerCallback(String id);
-typedef void SearchCallback(Map<String, dynamic> query);
+typedef void SearchCallback(String searchKey, dynamic searchValue);
+typedef void SortCallback(bool asc, int index);
 typedef ListRowWidget CreateRow(int index);
 typedef ListHeaderWidget CreateHeader();
