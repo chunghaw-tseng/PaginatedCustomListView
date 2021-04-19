@@ -137,20 +137,26 @@ class PagingListViewModel extends Model {
     }
   ];
 
+  var large_data = List.filled(50, {
+    "patient_name": "TestK",
+    "patient_id": "20",
+    "study_iuid": "123456700",
+    "report_date": "2020-01-26",
+    "modality": "CT",
+    "series_iuid": ["1234", "223455", "3434"]
+  });
+
   Map<String, dynamic> getQueries() {
     return search;
   }
 
   void addQuery(String query, dynamic value) {
-    // Check if sorting is in the keys
-    if (query.contains("_sort")) {
-      search.removeWhere((key, value) => key.contains("_sort"));
-    }
     search[query] = value;
     print(search);
     notifyListeners();
   }
 
+  // Send sort every single time
   void updateSort(bool asc, int index) {
     sortAscending = asc;
     sortIndex = index;

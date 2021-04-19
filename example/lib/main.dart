@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:paginatedlistview/paginatedlistview.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -45,17 +43,50 @@ class _MyHomePageState extends State<MyHomePage> {
     pageModel.addQuery(searchkey, data);
   }
 
-  sortData(bool sortKey, dynamic data) {
-    pageModel.updateSort(sortKey, data);
-  }
-
   createExpandedRow(List<String> current) {
     List<Widget> expandedItems = [];
     for (var i = 0; i < current.length; i++) {
-      expandedItems.add(ListItem(
-          child: SelectableText("${current[i]}"), searchKey: "${current[i]}"));
+      expandedItems.add(ListItem(child: SelectableText("${current[i]}")));
     }
     return expandedItems;
+  }
+
+  createHeaders() {
+    List<Header> headerList = [];
+    for (var header in pageModel.header_data) {
+      switch (header["type"]) {
+        case HeaderType.selectable:
+          headerList.add(Header(
+              label: header["name"],
+              headerKey: header["key"],
+              searchField: SelectableHeader(
+                  label: header["name"],
+                  selection: header["selection"],
+                  keyName: header["key"],
+                  filterSearch: headerFiltered)));
+          break;
+        case HeaderType.date:
+          headerList.add(Header(
+              label: header["name"],
+              headerKey: header["key"],
+              searchField: TimeRangeHeader(
+                  textSearch: true,
+                  keyName: header["key"],
+                  filterSearch: headerFiltered)));
+          break;
+        case HeaderType.searchable:
+        default:
+          headerList.add(Header(
+              label: header["name"],
+              headerKey: header["key"],
+              searchField: SearchableHeader(
+                  label: header["name"],
+                  keyName: header["key"],
+                  filterSearch: headerFiltered)));
+          break;
+      }
+    }
+    return headerList;
   }
 
   @override
@@ -68,94 +99,36 @@ class _MyHomePageState extends State<MyHomePage> {
           child: ScopedModel(
               model: pageModel,
               child: SearchablePaginatedListView(
-                header: () {
-                  List<Header> headerList = [];
-                  for (var header in pageModel.header_data) {
-                    switch (header["type"]) {
-                      case HeaderType.selectable:
-                        headerList.add(Header(
-                            label: header["name"],
-                            headerKey: header["key"],
-                            searchField: SelectableHeader(
-                                label: header["name"],
-                                selection: header["selection"],
-                                keyName: header["key"],
-                                filterSearch: headerFiltered)));
-                        break;
-                      case HeaderType.date:
-                        headerList.add(Header(
-                            label: header["name"],
-                            headerKey: header["key"],
-                            searchField: TimeRangeHeader(
-                                label: header["name"],
-                                textSearch: true,
-                                keyName: header["key"],
-                                filterSearch: headerFiltered)));
-                        break;
-                      case HeaderType.searchable:
-                      default:
-                        headerList.add(Header(
-                            label: header["name"],
-                            headerKey: header["key"],
-                            searchField: SearchableHeader(
-                                label: header["name"],
-                                keyName: header["key"],
-                                filterSearch: headerFiltered)));
-                        break;
-                    }
-                  }
-                  return ListHeaderWidget(
-                    headers: headerList,
-                    sortAscending: pageModel.sortAscending,
-                    sortingIndex: pageModel.sortIndex,
-                    onSort: (bool asc, int index) {
-                      setState(() {
-                        pageModel.updateSort(asc, index);
-                      });
-                    },
-                  );
-                },
-                row: (int index) {
-                  var current = pageModel.data[index];
-                  return ListRowWidget(
-                      cells: [
-                        ListItem(
-                          child: Text(current["patient_name"]),
-                          searchKey: current["patient_name"],
-                        ),
-                        ListItem(
-                          child: Text(current["patient_id"]),
-                          searchKey: current["patient_id"],
-                        ),
-                        ListItem(
-                          child: Text(current["study_iuid"]),
-                          searchKey: current["study_iuid"],
-                        ),
-                        ListItem(
-                          child: Text(current["report_date"]),
-                          searchKey: current["report_date"],
-                        ),
-                        ListItem(
-                          child: Text(current["modality"]),
-                          searchKey: current["modality"],
-                        ),
-                        ListItem(
-                          child: TextButton(
-                            onPressed: null,
-                            child: Text("View"),
-                          ),
-                          searchKey: current["modality"],
-                        ),
-                      ],
-                      expandedCells: current.containsKey("series_iuid")
-                          ? createExpandedRow(current["series_iuid"])
-                          : null);
-                },
-                pages: pageModel.pageInfo.totalPages,
+                headers: createHeaders(),
+                rows: pageModel.large_data
+                    .map((e) => ListRowWidget(
+                            cells: [
+                              ListItem(child: Text(e["patient_name"])),
+                              ListItem(child: Text(e["patient_id"])),
+                              ListItem(child: Text(e["study_iuid"])),
+                              ListItem(child: Text(e["report_date"])),
+                              ListItem(child: Text(e["modality"])),
+                              ListItem(
+                                child: TextButton(
+                                    onPressed: null, child: Text("View")),
+                              ),
+                            ],
+                            expandedCells: e.containsKey("series_iuid")
+                                ? createExpandedRow(e["series_iuid"])
+                                : null))
+                    .toList(),
+                sortAscending: pageModel.sortAscending,
+                sortIndex: pageModel.sortIndex,
+                totalpages: pageModel.pageInfo.totalPages,
                 currentPage: pageModel.pageInfo.currentPage,
                 items: pageModel.pageInfo.items,
                 perPage: pageModel.pageInfo.perPage,
                 totalItems: pageModel.pageInfo.totalItems,
+                onSort: (bool asc, int index) {
+                  setState(() {
+                    pageModel.updateSort(asc, index);
+                  });
+                },
                 onPageChange: (value) {
                   setState(() {
                     pageModel.changePage(value);
