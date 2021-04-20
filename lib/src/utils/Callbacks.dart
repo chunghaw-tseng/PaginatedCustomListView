@@ -6,4 +6,3 @@ typedef void ChangePerCallback(String id);
 typedef void SearchCallback(String searchKey, dynamic searchValue);
 typedef void SortCallback(bool asc, int index);
 typedef ListRowWidget CreateRow(int index);
-typedef ListHeaderWidget CreateHeader();

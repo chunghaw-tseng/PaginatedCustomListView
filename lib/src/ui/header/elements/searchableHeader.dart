@@ -20,9 +20,18 @@ class SearchableHeader extends StatefulWidget {
 }
 
 class _SearchableHeaderState extends State<SearchableHeader> {
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: myController,
       textInputAction: TextInputAction.search,
       onSubmitted: (value) {
         widget.filterSearch(widget.keyName, value);

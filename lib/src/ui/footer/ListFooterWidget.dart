@@ -3,13 +3,13 @@ import 'package:paginatedlistview/src/ui/footer/elements/PageItemsWidget.dart';
 import 'package:paginatedlistview/src/ui/footer/elements/PageSelectorWidget.dart';
 import 'package:paginatedlistview/src/utils/Callbacks.dart';
 
-class ListFooterWidget extends StatefulWidget {
+class ListFooterWidget extends StatelessWidget {
   final int totalPages;
   final int currentPage;
   final String perPage;
   final PageChangeCallback onPageChanged;
   final ChangePerCallback onPerChangePressed;
-  ListFooterWidget(
+  const ListFooterWidget(
       {Key key,
       @required this.totalPages,
       @required this.currentPage,
@@ -19,23 +19,18 @@ class ListFooterWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  _ListFooterWidgetState createState() => _ListFooterWidgetState();
-}
-
-class _ListFooterWidgetState extends State<ListFooterWidget> {
-  @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        PageItemsWidgets(
-          perPage: widget.perPage,
-          onPerPagePressed: (value) => widget.onPerChangePressed(value),
+        PageItemsWidget(
+          perPage: this.perPage,
+          onPerPagePressed: this.onPerChangePressed,
         ),
         PageSelectorWidget(
-          currentPage: widget.currentPage,
-          totalPages: widget.totalPages,
-          onPageChanged: (value) => widget.onPageChanged(value),
+          currentPage: this.currentPage,
+          totalPages: this.totalPages,
+          onPageChanged: this.onPageChanged,
         )
       ],
     );

@@ -7,15 +7,13 @@ import 'dateTime/dateTimePicker.dart';
 // 2 different types -> Click and the other text
 class TimeRangeHeader extends StatefulWidget {
   final bool textSearch;
-  final String label;
   final String keyName;
   final SearchCallback filterSearch;
   TimeRangeHeader(
       {Key key,
       @required this.textSearch,
       @required this.keyName,
-      this.filterSearch,
-      this.label})
+      this.filterSearch})
       : super(key: key);
 
   @override
@@ -23,6 +21,11 @@ class TimeRangeHeader extends StatefulWidget {
 }
 
 class _TimeRangeHeaderState extends State<TimeRangeHeader> {
+  final Key _startdateKey = Key('START_KEY');
+  final Key _enddateKey = Key('END_KEY');
+  final _startController = TextEditingController();
+  final _endController = TextEditingController();
+
   DatetimeSearch _startTimeSearch;
   DatetimeSearch _endTimeSearch;
   var _starterror = true;
@@ -39,6 +42,13 @@ class _TimeRangeHeaderState extends State<TimeRangeHeader> {
     if (_endTimeSearch == null) {
       _endTimeSearch = DatetimeSearch(type: Datetype.end);
     }
+  }
+
+  @override
+  void dispose() {
+    _startController.dispose();
+    _endController.dispose();
+    super.dispose();
   }
 
   pickerDateSet(DatetimeSearch changedtime) {
@@ -72,6 +82,8 @@ class _TimeRangeHeaderState extends State<TimeRangeHeader> {
               Expanded(
                 child: TextField(
                   textInputAction: TextInputAction.search,
+                  key: _startdateKey,
+                  controller: _startController,
                   onSubmitted: (value) {
                     setState(() {
                       _starterror = validateDate(value);
@@ -84,7 +96,7 @@ class _TimeRangeHeaderState extends State<TimeRangeHeader> {
                   // TODO Add the error on top
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: widget.label,
+                      labelText: "Start Date",
                       hintText: "YYYYMMDD",
                       errorText: _starterror ? null : "YYYYMMDD"),
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -94,6 +106,8 @@ class _TimeRangeHeaderState extends State<TimeRangeHeader> {
               Expanded(
                 child: TextField(
                   textInputAction: TextInputAction.search,
+                  controller: _endController,
+                  key: _enddateKey,
                   onSubmitted: (value) {
                     setState(() {
                       _enderror = validateDate(value);
@@ -105,7 +119,7 @@ class _TimeRangeHeaderState extends State<TimeRangeHeader> {
                   },
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: widget.label,
+                      labelText: "End Date",
                       hintText: "YYYYMMDD",
                       errorText: _enderror ? null : "YYYYMMDD"),
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],

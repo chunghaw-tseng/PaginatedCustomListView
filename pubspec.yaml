@@ -1,8 +1,10 @@
 name: paginatedlistview
-description: Paginated ListView with searching built. All queries will be done in the backend.
+description:
+  Paginated ListView with searching built. All queries will be done in the
+  backend.
 version: 1.0.0
 author: Chung Haw Tseng Fang
-homepage:
+homepage: null
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -15,16 +17,22 @@ dependencies:
   flutter_markdown: ^0.3.3
   intl: ^0.17.0
 
+flutter_localizations:
+  sdk: flutter
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  integration_test: ^1.0.1
+  test: ^1.14.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
-
+  generate: true
+  assets:
+    - assets/json/
   # To add assets to your package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
@@ -35,7 +43,6 @@ flutter:
   #
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # To add custom fonts to your package, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

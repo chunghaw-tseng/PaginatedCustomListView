@@ -18,7 +18,6 @@ class ListHeaderWidget extends StatelessWidget {
 
   List<HeaderCellWidget> _buildHeadersCells() {
     List<HeaderCellWidget> headerCells = [];
-    print(sortingIndex);
     for (var i = 0; i < headers.length; i++) {
       headerCells.add(HeaderCellWidget(
         label: headers[i].label,
