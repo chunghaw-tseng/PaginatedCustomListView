@@ -26,7 +26,7 @@ class PageItemsWidget extends StatelessWidget {
               color: Colors.deepPurpleAccent,
             ),
             onChanged: this.onPerPagePressed,
-            items: <String>['10', '20', '30', '40', '50']
+            items: <String>['10', '15', '20', '30', '40', '50']
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 key: Key("$value"),

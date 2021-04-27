@@ -27,7 +27,7 @@ class _SelectableHeaderState extends State<SelectableHeader> {
   void initState() {
     super.initState();
     for (var i = 0; i < widget.selection.length; i++) {
-      assert(_searchQueries.containsKey(widget.selection[i]) == true);
+      assert(_searchQueries.containsKey(widget.selection[i]) != true);
       _searchQueries[widget.selection[i]] = false;
     }
   }

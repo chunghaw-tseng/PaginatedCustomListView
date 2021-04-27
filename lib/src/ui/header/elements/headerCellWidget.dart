@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:paginatedlistview/src/utils/Callbacks.dart';
 
 class HeaderCellWidget extends StatelessWidget {
@@ -39,26 +40,32 @@ class HeaderCellWidget extends StatelessWidget {
     return Expanded(
       child: Padding(
         padding: EdgeInsets.all(5),
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.all(5),
-              child: TextButton(
-                onPressed: () {
-                  this.onSort(
-                      (this.sortAscending == null) ? true : !this.sortAscending,
-                      this.index);
-                },
-                child: Row(children: [
-                  Text(this.label,
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  _createSortIcons(this.sortAscending)
-                ]),
+        child: ConstrainedBox(
+          constraints:
+              BoxConstraints(minWidth: 200, maxWidth: 400, minHeight: 100),
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(5),
+                child: TextButton(
+                  onPressed: () {
+                    this.onSort(
+                        (this.sortAscending == null)
+                            ? true
+                            : !this.sortAscending,
+                        this.index);
+                  },
+                  child: Row(children: [
+                    Text(this.label,
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    _createSortIcons(this.sortAscending)
+                  ]),
+                ),
               ),
-            ),
-            Padding(padding: EdgeInsets.only(bottom: 10), child: headerWidget)
-          ],
+              Padding(padding: EdgeInsets.only(bottom: 10), child: headerWidget)
+            ],
+          ),
         ),
       ),
     );

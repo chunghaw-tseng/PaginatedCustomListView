@@ -13,6 +13,7 @@ class SearchablePaginatedListView extends StatefulWidget {
   final List<ListRowWidget> rows;
   final int items;
   final int totalItems;
+  final Color bgcolor;
 
   /// Callbacks
   final PageChangeCallback onPageChange;
@@ -28,8 +29,9 @@ class SearchablePaginatedListView extends StatefulWidget {
     @required this.headers,
     @required this.sortIndex,
     @required this.sortAscending,
-    this.perPage,
+    @required this.perPage,
     @required this.rows,
+    this.bgcolor,
     this.onPageChange,
     this.onSort,
     this.onPerChangePressed,
@@ -63,20 +65,27 @@ class _SearchablePaginatedListViewState
       child: Column(
         children: [
           Expanded(
-            child: Card(
-              // Separating header and rows for fixed header
-              child: Column(children: [
-                ListHeaderWidget(
-                    headers: widget.headers,
-                    sortAscending: widget.sortAscending,
-                    sortingIndex: widget.sortIndex,
-                    onSort: widget.onSort),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: _createListData(),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Card(
+                color: widget.bgcolor,
+                // Separating header and rows for fixed header
+                child: Column(children: [
+                  ListHeaderWidget(
+                      headers: widget.headers,
+                      sortAscending: widget.sortAscending,
+                      sortingIndex: widget.sortIndex,
+                      onSort: widget.onSort),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Container(
+                        width: (widget.headers.length * 275.0),
+                        child: _createListData(),
+                      ),
+                    ),
                   ),
-                ),
-              ]),
+                ]),
+              ),
             ),
           ),
           Padding(

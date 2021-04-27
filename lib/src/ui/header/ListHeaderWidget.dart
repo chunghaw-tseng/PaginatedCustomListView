@@ -33,15 +33,18 @@ class ListHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-        onTap: null,
-        title: Container(
-          decoration: BoxDecoration(
-              border: Border(bottom: BorderSide(color: Colors.black))),
-          child: Padding(
-            padding: EdgeInsets.only(right: 35),
-            child: Row(
-              children: _buildHeadersCells(),
+    return Container(
+        width: headers.length * 275.0,
+        child: ListTile(
+          onTap: null,
+          title: Container(
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.black))),
+            child: Padding(
+              padding: EdgeInsets.only(right: 35),
+              child: Row(
+                children: _buildHeadersCells(),
+              ),
             ),
           ),
         ));

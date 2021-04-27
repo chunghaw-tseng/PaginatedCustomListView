@@ -228,6 +228,7 @@ void main() {
                   ListItem(child: Text("Item")),
                 ]),
               ],
+              perPage: '10',
             ),
           ),
         ),

@@ -7,6 +7,10 @@ class ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: Center(child: child));
+    return Expanded(
+        child: ConstrainedBox(
+            constraints:
+                BoxConstraints(minWidth: 200, maxWidth: 400, minHeight: 60),
+            child: Center(child: child)));
   }
 }
