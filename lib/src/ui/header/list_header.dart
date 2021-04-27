@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:paginatedlistview/src/ui/header/elements/headerCellWidget.dart';
-import 'package:paginatedlistview/src/utils/Callbacks.dart';
-import 'package:paginatedlistview/src/utils/Header.dart';
+import 'package:paginatedlistview/src/ui/header/elements/headercell_widget.dart';
+import 'package:paginatedlistview/src/utils/callbacks.dart';
+import 'package:paginatedlistview/src/utils/header.dart';
 
 class ListHeaderWidget extends StatelessWidget {
   final List<Header> headers;

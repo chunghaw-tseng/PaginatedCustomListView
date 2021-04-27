@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:paginatedlistview/src/utils/Callbacks.dart';
+import 'package:paginatedlistview/src/utils/callbacks.dart';
 
 class SearchableHeader extends StatefulWidget {
   /// Label

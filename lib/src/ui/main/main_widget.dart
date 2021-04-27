@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paginatedlistview/paginatedlistview.dart';
-import 'package:paginatedlistview/src/ui/footer/ListFooterWidget.dart';
-import 'package:paginatedlistview/src/utils/Callbacks.dart';
+import 'package:paginatedlistview/src/ui/footer/listfooter_widget.dart';
+import 'package:paginatedlistview/src/utils/callbacks.dart';
 
 class SearchablePaginatedListView extends StatefulWidget {
   final int totalpages;

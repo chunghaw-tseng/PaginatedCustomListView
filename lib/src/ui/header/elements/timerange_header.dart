@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:paginatedlistview/src/ui/header/elements/dateTime/datetimeSearch.dart';
-import 'package:paginatedlistview/src/utils/Callbacks.dart';
-import 'dateTime/dateTimePicker.dart';
+import 'package:paginatedlistview/src/ui/header/elements/dateTime/datetime_search.dart';
+import 'package:paginatedlistview/src/utils/callbacks.dart';
+import 'dateTime/datetime_picker.dart';
 
 // 2 different types -> Click and the other text
 class TimeRangeHeader extends StatefulWidget {

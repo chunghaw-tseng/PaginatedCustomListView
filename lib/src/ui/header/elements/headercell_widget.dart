@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:paginatedlistview/src/utils/Callbacks.dart';
+import 'package:paginatedlistview/src/utils/callbacks.dart';
 
 class HeaderCellWidget extends StatelessWidget {
   final bool sortAscending;

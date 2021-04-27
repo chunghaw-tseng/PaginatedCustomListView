@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paginatedlistview/src/ui/listrow/elements/ExpandedListRow.dart';
+import 'package:paginatedlistview/src/ui/listrow/elements/expandedlist_row.dart';
 
 // Add the series to the list
 class ListRowWidget extends StatelessWidget {

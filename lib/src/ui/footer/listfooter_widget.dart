@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:paginatedlistview/src/ui/footer/elements/PageItemsWidget.dart';
-import 'package:paginatedlistview/src/ui/footer/elements/PageSelectorWidget.dart';
-import 'package:paginatedlistview/src/utils/Callbacks.dart';
+import 'package:paginatedlistview/src/ui/footer/elements/pageitems_widget.dart';
+import 'package:paginatedlistview/src/ui/footer/elements/pageselector_widget.dart';
+import 'package:paginatedlistview/src/utils/callbacks.dart';
 
 class ListFooterWidget extends StatelessWidget {
   final int totalPages;

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'datetimeSearch.dart';
+import 'datetime_search.dart';
 
 /// Shows flutter in built datepicker
 class DateTimePicker extends StatelessWidget {

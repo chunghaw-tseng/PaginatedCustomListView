@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paginatedlistview/src/utils/Callbacks.dart';
+import 'package:paginatedlistview/src/utils/callbacks.dart';
 
 class PageItemsWidget extends StatelessWidget {
   final String perPage;

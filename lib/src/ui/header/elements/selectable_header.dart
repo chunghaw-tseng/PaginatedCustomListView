@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paginatedlistview/src/utils/Callbacks.dart';
+import 'package:paginatedlistview/src/utils/callbacks.dart';
 
 // TODO Selection cannot have same name
 class SelectableHeader extends StatefulWidget {

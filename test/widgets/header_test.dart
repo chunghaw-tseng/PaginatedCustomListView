@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:paginatedlistview/paginatedlistview.dart';
-import 'package:paginatedlistview/src/ui/main/mainWidget.dart';
+import 'package:paginatedlistview/src/ui/main/main_widget.dart';
 
 void main() {
   group('Header Widget Tests', () {
