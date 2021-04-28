@@ -13,12 +13,14 @@ class PagingListViewModel extends Model {
     {
       "name": "Patient Name",
       "key": "patient_name",
+      "width": 160.0,
       "type": HeaderType.searchable,
       "sort": SortType.ascending
     },
     {
       "name": "Patient ID",
       "key": "patient_id",
+      "width": 160.0,
       "type": HeaderType.searchable,
       "sort": SortType.none,
     },
@@ -31,12 +33,14 @@ class PagingListViewModel extends Model {
     {
       "name": "Report Date",
       "key": "report_date",
+      "width": 300.0,
       "type": HeaderType.date,
       "sort": SortType.none,
     },
     {
       "name": "Modality",
       "key": "modality",
+      "width": 150.0,
       "type": HeaderType.selectable,
       "selection": ["DR", "CT", "PN"],
       "sort": SortType.none,
@@ -44,6 +48,7 @@ class PagingListViewModel extends Model {
     {
       "name": "Result",
       "key": "result",
+      "width": 150.0,
       "type": HeaderType.selectable,
       "selection": ["OK", "Waiting", "Error"],
       "sort": SortType.none,

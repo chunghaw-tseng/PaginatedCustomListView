@@ -59,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
           headerList.add(Header(
               label: header["name"],
               headerKey: header["key"],
+              width: header["width"],
               searchField: SelectableHeader(
                   label: header["name"],
                   selection: header["selection"],
@@ -69,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
           headerList.add(Header(
               label: header["name"],
               headerKey: header["key"],
+              width: header["width"],
               searchField: TimeRangeHeader(
                   textSearch: true,
                   keyName: header["key"],
@@ -79,6 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
           headerList.add(Header(
               label: header["name"],
               headerKey: header["key"],
+              width: header["width"],
               searchField: SearchableHeader(
                   label: header["name"],
                   keyName: header["key"],
@@ -101,19 +104,16 @@ class _MyHomePageState extends State<MyHomePage> {
               child: SearchablePaginatedListView(
                 headers: createHeaders(),
                 rows: pageModel.large_data
-                    .map((e) => ListRowWidget(
-                            cells: [
-                              ListItem(child: Text(e["patient_name"])),
-                              ListItem(child: Text(e["patient_id"])),
-                              ListItem(child: Text(e["study_iuid"])),
-                              ListItem(child: Text(e["report_date"])),
-                              ListItem(child: Text(e["modality"])),
-                              ListItem(
-                                child: TextButton(
-                                    onPressed: null, child: Text("View")),
-                              ),
+                    .map((e) => RowItems(
+                            items: [
+                              Text(e["patient_name"]),
+                              Text(e["patient_id"]),
+                              Text(e["study_iuid"]),
+                              Text(e["report_date"]),
+                              Text(e["modality"]),
+                              TextButton(onPressed: null, child: Text("View")),
                             ],
-                            expandedCells: e.containsKey("series_iuid")
+                            expanded: e.containsKey("series_iuid")
                                 ? createExpandedRow(e["series_iuid"])
                                 : null))
                     .toList(),
