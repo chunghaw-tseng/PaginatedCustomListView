@@ -9,10 +9,12 @@ class TimeRangeHeader extends StatefulWidget {
   final bool textSearch;
   final String keyName;
   final SearchCallback filterSearch;
+  final isResultTimestmp;
   TimeRangeHeader(
       {Key key,
       @required this.textSearch,
       @required this.keyName,
+      this.isResultTimestmp,
       this.filterSearch})
       : super(key: key);
 
@@ -63,8 +65,8 @@ class _TimeRangeHeaderState extends State<TimeRangeHeader> {
     });
   }
 
-  stringToTimestamp(String datestring) {
-    return DateTime.parse(datestring).millisecondsSinceEpoch;
+  String stringToTimestamp(String datestring) {
+    return DateTime.parse(datestring).millisecondsSinceEpoch.toString();
   }
 
   validateDate(String value) {
@@ -88,8 +90,11 @@ class _TimeRangeHeaderState extends State<TimeRangeHeader> {
                     setState(() {
                       _starterror = validateDate(value);
                       if (_starterror) {
-                        widget.filterSearch("${widget.keyName}_start",
-                            stringToTimestamp(value));
+                        widget.filterSearch(
+                            "${widget.keyName}_start",
+                            widget.isResultTimestmp
+                                ? stringToTimestamp(value)
+                                : value);
                       }
                     });
                   },
@@ -113,7 +118,10 @@ class _TimeRangeHeaderState extends State<TimeRangeHeader> {
                       _enderror = validateDate(value);
                       if (_enderror) {
                         widget.filterSearch(
-                            "${widget.keyName}_end", stringToTimestamp(value));
+                            "${widget.keyName}_end",
+                            widget.isResultTimestmp
+                                ? stringToTimestamp(value)
+                                : value);
                       }
                     });
                   },

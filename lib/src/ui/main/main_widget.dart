@@ -10,7 +10,7 @@ class SearchablePaginatedListView extends StatefulWidget {
   final List<Header> headers;
   final int sortIndex;
   final bool sortAscending;
-  final List<ListRowWidget> rows;
+  final List<RowItems> rows;
   final int items;
   final int totalItems;
   final Color bgcolor;
@@ -49,13 +49,52 @@ class SearchablePaginatedListView extends StatefulWidget {
 
 class _SearchablePaginatedListViewState
     extends State<SearchablePaginatedListView> {
+  double _listWidth;
+  double _expandedTileWidth = 75;
+
+  @override
+  void initState() {
+    super.initState();
+    _listWidth = _getHeadersWidth();
+  }
+
+  _getHeadersWidth() {
+    double width = 0;
+    for (Header i in widget.headers) {
+      if (i.width == null) {
+        width += 265.0;
+      } else {
+        width += i.width;
+      }
+    }
+    return width + _expandedTileWidth;
+  }
+
+  List<ListRowWidget> _createRows() {
+    List<ListRowWidget> listData = [];
+    for (RowItems row in widget.rows) {
+      List<ListItem> items = [];
+      for (var i = 0; i < row.items.length; i++) {
+        items
+            .add(ListItem(child: row.items[i], width: widget.headers[i].width));
+      }
+      listData.add(ListRowWidget(
+        cells: items,
+        expandedCells: row.expanded,
+      ));
+    }
+    return listData;
+  }
+
+  // Pass the size to the items
   _createListData() {
     if (widget.rows.length == 0) {
       return Text("No data");
     } else {
-      assert(widget.headers.length == widget.rows[0].cells.length,
+      assert(widget.headers.length == widget.rows[0].items.length,
           "Header length not equal the Row length");
-      return ListView(shrinkWrap: true, children: widget.rows);
+      // Create the ListRow
+      return ListView(shrinkWrap: true, children: _createRows());
     }
   }
 
@@ -70,21 +109,24 @@ class _SearchablePaginatedListViewState
               child: Card(
                 color: widget.bgcolor,
                 // Separating header and rows for fixed header
-                child: Column(children: [
-                  ListHeaderWidget(
-                      headers: widget.headers,
-                      sortAscending: widget.sortAscending,
-                      sortingIndex: widget.sortIndex,
-                      onSort: widget.onSort),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Container(
-                        width: (widget.headers.length * 275.0),
-                        child: _createListData(),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      ListHeaderWidget(
+                          headerWidth: _listWidth,
+                          headers: widget.headers,
+                          sortAscending: widget.sortAscending,
+                          sortingIndex: widget.sortIndex,
+                          onSort: widget.onSort),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Container(
+                            width: _listWidth,
+                            child: _createListData(),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ]),
+                    ]),
               ),
             ),
           ),

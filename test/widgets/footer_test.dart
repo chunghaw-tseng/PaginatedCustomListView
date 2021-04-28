@@ -26,12 +26,11 @@ void main() {
                 sortAscending: true,
                 totalItems: 1,
                 items: 1,
+                perPage: "10",
                 currentPage: _currentPage,
                 totalpages: lastPage,
                 rows: [
-                  ListRowWidget(cells: [
-                    ListItem(child: Text("Item")),
-                  ]),
+                  RowItems(items: [Text("Item")]),
                 ],
                 onPageChange: (int page) {
                   setState(() {
@@ -93,9 +92,7 @@ void main() {
                 currentPage: 1,
                 totalpages: 10,
                 rows: [
-                  ListRowWidget(cells: [
-                    ListItem(child: Text("Item")),
-                  ]),
+                  RowItems(items: [Text("Item")]),
                 ],
                 onPerChangePressed: (String page) {
                   setState(() {

@@ -8,7 +8,7 @@ class ListRowWidget extends StatelessWidget {
   const ListRowWidget({Key key, @required this.cells, this.expandedCells})
       : super(key: key);
 
-  List<ExpandedListRow> createRows() {
+  List<ExpandedListRow> _createRows() {
     List<ExpandedListRow> rows = [];
     for (var i = 0; i < expandedCells.length; i++) {
       rows.add(ExpandedListRow(
@@ -27,12 +27,12 @@ class ListRowWidget extends StatelessWidget {
             ),
             children: [
                 Column(
-                  children: createRows(),
+                  children: _createRows(),
                 ),
               ])
         : ListTile(
             onTap: () {},
-            trailing: Icon(Icons.keyboard_arrow_up_outlined),
+            trailing: Container(width: 32),
             title: Row(
               children: cells,
             ),

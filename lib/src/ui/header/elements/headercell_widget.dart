@@ -7,6 +7,7 @@ class HeaderCellWidget extends StatelessWidget {
   final String label;
   final String headerKey;
   final int index;
+  final double width;
 
   ///Callbacks
   final SearchCallback onSearch;
@@ -19,6 +20,7 @@ class HeaderCellWidget extends StatelessWidget {
       @required this.index,
       @required this.headerKey,
       @required this.headerWidget,
+      @required this.width,
       this.sortAscending,
       this.onSearch,
       this.onSort})
@@ -35,39 +37,74 @@ class HeaderCellWidget extends StatelessWidget {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
+  Widget _buildFixedHeaderCell() {
+    return ConstrainedBox(
+      constraints:
+          BoxConstraints(minWidth: 50.0, maxWidth: this.width, minHeight: 100),
       child: Padding(
         padding: EdgeInsets.all(5),
-        child: ConstrainedBox(
-          constraints:
-              BoxConstraints(minWidth: 200, maxWidth: 400, minHeight: 100),
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(5),
-                child: TextButton(
-                  onPressed: () {
-                    this.onSort(
-                        (this.sortAscending == null)
-                            ? true
-                            : !this.sortAscending,
-                        this.index);
-                  },
-                  child: Row(children: [
-                    Text(this.label,
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
-                    _createSortIcons(this.sortAscending)
-                  ]),
-                ),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: TextButton(
+                onPressed: () {
+                  this.onSort(
+                      (this.sortAscending == null) ? true : !this.sortAscending,
+                      this.index);
+                },
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text(this.label,
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  _createSortIcons(this.sortAscending)
+                ]),
               ),
-              Padding(padding: EdgeInsets.only(bottom: 10), child: headerWidget)
-            ],
-          ),
+            ),
+            Padding(padding: EdgeInsets.only(bottom: 10), child: headerWidget)
+          ],
         ),
       ),
     );
+  }
+
+  Widget _buildFlexibleHeaderCell() {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.all(5),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: TextButton(
+                onPressed: () {
+                  this.onSort(
+                      (this.sortAscending == null) ? true : !this.sortAscending,
+                      this.index);
+                },
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text(this.label,
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  _createSortIcons(this.sortAscending)
+                ]),
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(bottom: 10), child: headerWidget)
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (this.width != null) {
+      return _buildFixedHeaderCell();
+    } else {
+      return _buildFlexibleHeaderCell();
+    }
   }
 }

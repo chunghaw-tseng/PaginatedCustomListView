@@ -26,12 +26,11 @@ void main() {
                   sortAscending: ascending,
                   totalItems: 1,
                   items: 1,
+                  perPage: "10",
                   currentPage: 1,
                   totalpages: 1,
                   rows: [
-                    ListRowWidget(cells: [
-                      ListItem(child: Text("Item")),
-                    ]),
+                    RowItems(items: [Text("Item")]),
                   ],
                   onSort: (asc, index) {
                     setState(() {
@@ -74,13 +73,12 @@ void main() {
                 sortIndex: 0,
                 sortAscending: false,
                 totalItems: 1,
+                perPage: "10",
                 items: 1,
                 currentPage: 1,
                 totalpages: 1,
                 rows: [
-                  ListRowWidget(cells: [
-                    ListItem(child: Text("Item")),
-                  ]),
+                  RowItems(items: [Text("Item")]),
                 ],
                 onSort: (asc, index) {}),
           ),
@@ -127,10 +125,9 @@ void main() {
                 items: 1,
                 currentPage: 1,
                 totalpages: 1,
+                perPage: "10",
                 rows: [
-                  ListRowWidget(cells: [
-                    ListItem(child: Text("Item")),
-                  ]),
+                  RowItems(items: [Text("Item")]),
                 ],
               );
             }),
@@ -176,10 +173,9 @@ void main() {
               items: 1,
               currentPage: 1,
               totalpages: 1,
+              perPage: "10",
               rows: [
-                ListRowWidget(cells: [
-                  ListItem(child: Text("Item")),
-                ]),
+                RowItems(items: [Text("Item")]),
               ],
             ),
           ),
@@ -224,11 +220,9 @@ void main() {
               currentPage: 1,
               totalpages: 1,
               rows: [
-                ListRowWidget(cells: [
-                  ListItem(child: Text("Item")),
-                ]),
+                RowItems(items: [Text("Item")]),
               ],
-              perPage: '10',
+              perPage: "10",
             ),
           ),
         ),
