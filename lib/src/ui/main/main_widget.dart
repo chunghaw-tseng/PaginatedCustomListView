@@ -14,6 +14,7 @@ class SearchablePaginatedListView extends StatefulWidget {
   final int items;
   final int totalItems;
   final Color bgcolor;
+  final Widget noDataMsg;
 
   /// Callbacks
   final PageChangeCallback onPageChange;
@@ -31,6 +32,7 @@ class SearchablePaginatedListView extends StatefulWidget {
     @required this.sortAscending,
     @required this.perPage,
     @required this.rows,
+    this.noDataMsg,
     this.bgcolor,
     this.onPageChange,
     this.onSort,
@@ -89,7 +91,9 @@ class _SearchablePaginatedListViewState
   // Pass the size to the items
   _createListData() {
     if (widget.rows.length == 0) {
-      return Text("No data");
+      return widget.noDataMsg == null
+          ? Center(child: Text("No data"))
+          : widget.noDataMsg;
     } else {
       assert(widget.headers.length == widget.rows[0].items.length,
           "Header length not equal the Row length");

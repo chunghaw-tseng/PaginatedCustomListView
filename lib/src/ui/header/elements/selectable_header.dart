@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:paginatedlistview/src/utils/callbacks.dart';
+import 'package:paginatedlistview/src/utils/utils.dart';
 
-// TODO Selection cannot have same name
 class SelectableHeader extends StatefulWidget {
   final String label;
   final String keyName;
-  final List<String> selection;
+  final List<Selection> selection;
   final SearchCallback filterSearch;
   SelectableHeader(
       {Key key,
@@ -27,8 +27,9 @@ class _SelectableHeaderState extends State<SelectableHeader> {
   void initState() {
     super.initState();
     for (var i = 0; i < widget.selection.length; i++) {
-      assert(_searchQueries.containsKey(widget.selection[i]) != true);
-      _searchQueries[widget.selection[i]] = false;
+      assert(_searchQueries.containsKey(widget.selection[i].value) != true,
+          "Selection has duplicated values");
+      _searchQueries[widget.selection[i].value] = false;
     }
   }
 
@@ -49,14 +50,13 @@ class _SelectableHeaderState extends State<SelectableHeader> {
         return PopupMenuItem(child: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
           return CheckboxListTile(
-            title: Text(e),
-            key: Key("$e"),
+            title: Text(e.label),
+            key: Key("${e.label}"),
             controlAffinity: ListTileControlAffinity.leading,
-            value: _searchQueries[e],
+            value: _searchQueries[e.value],
             onChanged: (bool value) {
               setState(() {
-                print("$e $value");
-                _searchQueries[e] = value;
+                _searchQueries[e.value] = value;
                 widget.filterSearch(widget.keyName, createQueries());
               });
             },
@@ -69,7 +69,7 @@ class _SelectableHeaderState extends State<SelectableHeader> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[Text("Choices"), Icon(Icons.arrow_drop_down)],
+          children: <Widget>[Text("Choose"), Icon(Icons.arrow_drop_down)],
         ),
       ),
       onSelected: (value) {},

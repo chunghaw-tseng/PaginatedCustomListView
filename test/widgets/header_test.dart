@@ -115,7 +115,7 @@ void main() {
                         },
                         label: "Test",
                         keyName: "test",
-                        selection: ["A"],
+                        selection: [Selection(label: "A", value: "A")],
                       ),
                       headerKey: "test")
                 ],

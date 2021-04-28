@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   createExpandedRow(List<String> current) {
-    List<Widget> expandedItems = [];
+    List<ListItem> expandedItems = [];
     for (var i = 0; i < current.length; i++) {
       expandedItems.add(ListItem(child: SelectableText("${current[i]}")));
     }

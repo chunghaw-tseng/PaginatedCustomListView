@@ -42,7 +42,11 @@ class PagingListViewModel extends Model {
       "key": "modality",
       "width": 150.0,
       "type": HeaderType.selectable,
-      "selection": ["DR", "CT", "PN"],
+      "selection": [
+        Selection(label: "DR", value: "DR"),
+        Selection(label: "CT", value: "CT"),
+        Selection(label: "PN", value: "PN")
+      ],
       "sort": SortType.none,
     },
     {
@@ -50,7 +54,11 @@ class PagingListViewModel extends Model {
       "key": "result",
       "width": 150.0,
       "type": HeaderType.selectable,
-      "selection": ["OK", "Waiting", "Error"],
+      "selection": [
+        Selection(label: "OK", value: "OK"),
+        Selection(label: "Waiting", value: "Waiting"),
+        Selection(label: "Error", value: "Error")
+      ],
       "sort": SortType.none,
     }
   ];
