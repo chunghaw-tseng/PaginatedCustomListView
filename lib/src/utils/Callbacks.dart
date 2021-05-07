@@ -1,5 +1,5 @@
 // Defining callbacks
-import '../../paginatedlistview.dart';
+import 'package:paginatedlistview/paginatedlistview.dart';
 
 typedef void PageChangeCallback(int id);
 typedef void ChangePerCallback(String id);
