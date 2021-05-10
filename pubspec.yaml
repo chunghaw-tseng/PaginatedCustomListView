@@ -2,7 +2,7 @@ name: paginatedlistview
 description:
   Paginated ListView with searching built. All queries will be done in the
   backend.
-version: 1.0.0
+version: 1.0.1
 author: Chung Haw Tseng Fang
 homepage: null
 
