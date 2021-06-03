@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
     pageModel.addQuery(searchkey, data);
   }
 
-  createExpandedRow(List<String> current) {
+  createExpandedRow(List<dynamic> current) {
     List<ListItem> expandedItems = [];
     for (var i = 0; i < current.length; i++) {
       expandedItems.add(ListItem(child: SelectableText("${current[i]}")));
@@ -103,13 +103,14 @@ class _MyHomePageState extends State<MyHomePage> {
               model: pageModel,
               child: SearchablePaginatedListView(
                 headers: createHeaders(),
-                rows: pageModel.large_data
+                rows: pageModel.data
                     .map((e) => RowItems(
                             items: [
                               Text(e["patient_name"]),
                               Text(e["patient_id"]),
                               Text(e["study_iuid"]),
                               Text(e["report_date"]),
+                              Text("${e["phase"]}"),
                               Text(e["modality"]),
                               TextButton(onPressed: null, child: Text("View")),
                             ],

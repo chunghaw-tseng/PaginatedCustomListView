@@ -20,13 +20,14 @@ class PagingListViewModel extends Model {
     {
       "name": "Patient ID",
       "key": "patient_id",
-      "width": 160.0,
+      "width": 150.0,
       "type": HeaderType.searchable,
       "sort": SortType.none,
     },
     {
       "name": "Study IUID",
       "key": "study_iuid",
+      "width": 300.0,
       "type": HeaderType.searchable,
       "sort": SortType.none,
     },
@@ -40,7 +41,7 @@ class PagingListViewModel extends Model {
     {
       "name": "Modality",
       "key": "modality",
-      "width": 150.0,
+      "width": 280.0,
       "type": HeaderType.selectable,
       "selection": [
         Selection(label: "DR", value: "DR"),
@@ -50,9 +51,21 @@ class PagingListViewModel extends Model {
       "sort": SortType.none,
     },
     {
+      "name": "Status",
+      "key": "phase",
+      "width": 160.0,
+      "type": HeaderType.selectable,
+      "selection": [
+        Selection(label: "Running", value: "running"),
+        Selection(label: "OK", value: "ok"),
+        Selection(label: "Error", value: "error")
+      ],
+      "sort": SortType.none,
+    },
+    {
       "name": "Result",
       "key": "result",
-      "width": 150.0,
+      "width": 160.0,
       "type": HeaderType.selectable,
       "selection": [
         Selection(label: "OK", value: "OK"),
@@ -70,6 +83,7 @@ class PagingListViewModel extends Model {
       "study_iuid": "123456789",
       "report_date": "2020-01-20",
       "modality": "CT",
+      "phase": 50,
       "series_iuid": ["1234", "223455", "3434"]
     },
     {
@@ -78,6 +92,7 @@ class PagingListViewModel extends Model {
       "study_iuid": "234567891",
       "report_date": "2020-01-20",
       "modality": "CT",
+      "phase": 50,
       "series_iuid": ["1234", "223455", "3434"]
     },
     {
@@ -86,6 +101,7 @@ class PagingListViewModel extends Model {
       "study_iuid": "345678912",
       "report_date": "2020-01-21",
       "modality": "CT",
+      "phase": 50,
       "series_iuid": ["1234", "223455", "3434"]
     },
     {
@@ -94,6 +110,7 @@ class PagingListViewModel extends Model {
       "study_iuid": "456789123",
       "report_date": "2020-01-21",
       "modality": "CT",
+      "phase": 50,
       "series_iuid": ["1234", "223455", "3434"]
     },
     {
@@ -101,7 +118,8 @@ class PagingListViewModel extends Model {
       "patient_id": "14",
       "study_iuid": "567891234",
       "report_date": "2020-01-22",
-      "modality": "CT"
+      "modality": "CT",
+      "phase": 50
     },
     {
       "patient_name": "TestF",
@@ -109,6 +127,7 @@ class PagingListViewModel extends Model {
       "study_iuid": "678912345",
       "report_date": "2020-01-23",
       "modality": "CT",
+      "phase": 50,
       "series_iuid": ["1234", "223455", "3434"]
     },
     {
@@ -116,13 +135,15 @@ class PagingListViewModel extends Model {
       "patient_id": "16",
       "study_iuid": "789123456",
       "report_date": "2020-01-23",
-      "modality": "CT"
+      "modality": "CT",
+      "phase": 50,
     },
     {
       "patient_name": "TestH",
       "patient_id": "17",
       "study_iuid": "891234567",
       "report_date": "2020-01-24",
+      "phase": 50,
       "modality": "CT"
     },
     {
@@ -131,6 +152,7 @@ class PagingListViewModel extends Model {
       "study_iuid": "912345678",
       "report_date": "2020-01-25",
       "modality": "CT",
+      "phase": 50,
       "series_iuid": ["1234", "223455", "3434"]
     },
     {
@@ -139,6 +161,7 @@ class PagingListViewModel extends Model {
       "study_iuid": "123456780",
       "report_date": "2020-01-25",
       "modality": "CT",
+      "phase": 50,
       "series_iuid": ["1234", "223455", "3434"]
     },
     {
@@ -147,6 +170,8 @@ class PagingListViewModel extends Model {
       "study_iuid": "123456700",
       "report_date": "2020-01-26",
       "modality": "CT",
+      "phase": 50,
+      "series_iuid": []
     }
   ];
 
@@ -156,7 +181,8 @@ class PagingListViewModel extends Model {
     "study_iuid": "123456700",
     "report_date": "2020-01-26",
     "modality": "CT",
-    "series_iuid": ["1234", "223455", "3434"]
+    "phase": 50,
+    "series_iuid": []
   });
 
   Map<String, dynamic> getQueries() {
