@@ -32,7 +32,7 @@ class ListRowWidget extends StatelessWidget {
               ])
         : ListTile(
             onTap: () {},
-            trailing: Container(width: 32),
+            trailing: Container(width: 30),
             title: Row(
               children: cells,
             ),
