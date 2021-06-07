@@ -39,6 +39,14 @@ class _SearchableHeaderState extends State<SearchableHeader> {
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: widget.label,
+        labelStyle: TextStyle(fontSize: 13.0),
+        suffixIcon: IconButton(
+          onPressed: () {
+            myController.clear();
+            widget.filterSearch(widget.keyName, "");
+          },
+          icon: Icon(Icons.clear),
+        ),
       ),
     );
   }

@@ -100,10 +100,19 @@ class _TimeRangeHeaderState extends State<TimeRangeHeader> {
                   },
                   // TODO Add the error on top
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Start Date",
-                      hintText: "YYYYMMDD",
-                      errorText: _starterror ? null : "YYYYMMDD"),
+                    border: OutlineInputBorder(),
+                    labelText: "Start Date",
+                    hintText: "YYYYMMDD",
+                    labelStyle: TextStyle(fontSize: 13.0),
+                    errorText: _starterror ? null : "YYYYMMDD",
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        _startController.clear();
+                        widget.filterSearch(widget.keyName, "");
+                      },
+                      icon: Icon(Icons.clear),
+                    ),
+                  ),
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
               ),
@@ -126,10 +135,19 @@ class _TimeRangeHeaderState extends State<TimeRangeHeader> {
                     });
                   },
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "End Date",
-                      hintText: "YYYYMMDD",
-                      errorText: _enderror ? null : "YYYYMMDD"),
+                    border: OutlineInputBorder(),
+                    labelText: "End Date",
+                    hintText: "YYYYMMDD",
+                    labelStyle: TextStyle(fontSize: 13.0),
+                    errorText: _enderror ? null : "YYYYMMDD",
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        _endController.clear();
+                        widget.filterSearch(widget.keyName, "");
+                      },
+                      icon: Icon(Icons.clear),
+                    ),
+                  ),
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
               )
