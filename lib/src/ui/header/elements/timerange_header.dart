@@ -103,6 +103,7 @@ class _TimeRangeHeaderState extends State<TimeRangeHeader> {
                     border: OutlineInputBorder(),
                     labelText: "Start Date",
                     hintText: "YYYYMMDD",
+                    hintStyle: TextStyle(fontSize: 10),
                     labelStyle: TextStyle(fontSize: 13.0),
                     errorText: _starterror ? null : "YYYYMMDD",
                     suffixIcon: IconButton(
@@ -138,6 +139,7 @@ class _TimeRangeHeaderState extends State<TimeRangeHeader> {
                     border: OutlineInputBorder(),
                     labelText: "End Date",
                     hintText: "YYYYMMDD",
+                    hintStyle: TextStyle(fontSize: 10),
                     labelStyle: TextStyle(fontSize: 13.0),
                     errorText: _enderror ? null : "YYYYMMDD",
                     suffixIcon: IconButton(

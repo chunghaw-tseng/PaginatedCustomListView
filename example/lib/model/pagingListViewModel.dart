@@ -34,7 +34,7 @@ class PagingListViewModel extends Model {
     {
       "name": "Report Date",
       "key": "report_date",
-      "width": 300.0,
+      "width": 260.0,
       "type": HeaderType.date,
       "sort": SortType.none,
     },
